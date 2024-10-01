@@ -68,7 +68,9 @@
 	  <None Remove="Resources\Images\astronaut.png" />
 	  <None Remove="Resources\Images\jupiter.png" />
 	  <None Remove="Resources\Images\main_background.jpg" />
+	  <None Remove="Resources\Images\moon.png" />
 	  <None Remove="Resources\Images\splash.svg" />
+	  <None Remove="Resources\Images\sun.png" />
 	</ItemGroup>
 
 	<ItemGroup>

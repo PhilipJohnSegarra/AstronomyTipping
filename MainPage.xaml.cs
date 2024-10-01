@@ -45,7 +45,7 @@ namespace AstronomyTipping
             lblCustomTip.Text = "Customize Tip:\n" + tipSlider.Value.ToString("F2") + "%";
         }
 
-        private void decrementBtn_Clicked(object sender, EventArgs e)
+        private async void decrementBtn_Clicked(object sender, EventArgs e)
         {
             if(splitBy > 1)
             {
@@ -55,32 +55,53 @@ namespace AstronomyTipping
             rcp.SplitBy = splitBy;
             UpdateObject();
             UpdateUI();
+
+            await Moon.TranslateTo(130, 300, 500);
+            await Moon.TranslateTo(0, 0, 0);
         }
 
-        private void tenPercentBtn_Clicked(object sender, EventArgs e)
+        private async void tenPercentBtn_Clicked(object sender, EventArgs e)
         {
             TipPercentage = 10;
             rcp.TipPercentage = TipPercentage;
             tipSlider.Value = TipPercentage;
             UpdateObject();
             UpdateUI();
+
+            await Sun.TranslateTo(-160, 120, 500);
+            await Sun.TranslateTo(0, 0, 0);
+            twentyPercentBtn.BackgroundColor = Color.FromArgb("#201F1F");
+            tenPercentBtn.BackgroundColor = Color.FromArgb("#EEB685");
+            fifteenPercentBtn.BackgroundColor = Color.FromArgb("#201F1F");
         }
 
-        private void fifteenPercentBtn_Clicked(object sender, EventArgs e)
+        private async void fifteenPercentBtn_Clicked(object sender, EventArgs e)
         {
             TipPercentage = 15;
             rcp.TipPercentage = TipPercentage;
             tipSlider.Value = TipPercentage;
             UpdateObject();
             UpdateUI();
+
+            await Sun.TranslateTo(-80, 120, 500);
+            await Sun.TranslateTo(0, 0, 0);
+            twentyPercentBtn.BackgroundColor = Color.FromArgb("#201F1F");
+            tenPercentBtn.BackgroundColor = Color.FromArgb("#201F1F");
+            fifteenPercentBtn.BackgroundColor = Color.FromArgb("#EEB685");
         }
-        private void twentyPercentBtn_Clicked(object sender, EventArgs e)
+        private async void twentyPercentBtn_Clicked(object sender, EventArgs e)
         {
             TipPercentage = 20;
             rcp.TipPercentage = TipPercentage;
             tipSlider.Value = TipPercentage;
             UpdateObject();
             UpdateUI();
+
+            await Sun.TranslateTo(0, 120, 500);
+            await Sun.TranslateTo(0, 0, 0);
+            twentyPercentBtn.BackgroundColor = Color.FromArgb("#EEB685");
+            tenPercentBtn.BackgroundColor = Color.FromArgb("#201F1F");
+            fifteenPercentBtn.BackgroundColor = Color.FromArgb("#201F1F");
         }
 
         private void BillEntry_TextChanged(object sender, TextChangedEventArgs e)
@@ -96,13 +117,16 @@ namespace AstronomyTipping
             UpdateUI();
         }
 
-        private void incrementBtn_Clicked(object sender, EventArgs e)
+        private async void incrementBtn_Clicked(object sender, EventArgs e)
         {
             splitBy++;
             splitEntry.Text = splitBy.ToString();
             rcp.SplitBy = splitBy;
             UpdateObject();
             UpdateUI();
+
+            await Moon.TranslateTo(270, 300, 500);
+            await Moon.TranslateTo(0, 0, 0);
         }
 
         private void UpdateUI()

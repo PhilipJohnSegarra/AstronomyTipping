@@ -24,7 +24,12 @@
                 <!--TOP TITLE-->
                 <Label TextColor="{StaticResource Primary}" Text="AstroTip" FontSize="40"
                HorizontalTextAlignment="Center" Margin="0, 10" Grid.Row="0" VerticalOptions="Center"/>
-                
+                <Image x:Name="Sun" ZIndex="100" Source="sun.png" HeightRequest="50" HorizontalOptions="End"/>
+                <!--y120 x-80 x-160-->
+
+                <Image x:Name="Moon" ZIndex="100" Source="moon.png" HeightRequest="50" HorizontalOptions="Start"/>
+                <!--y300 x130 x270-->
+
                 <!--FORM SECTION-->
                 <Grid Grid.Row="1">
                     <Grid.RowDefinitions>
