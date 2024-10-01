@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AstronomyTipping.MainPage"
+             Background="Black">
+
+    <ContentPage.Resources>
+        <Color x:Key="Primary">#EEB685</Color>
+        <Color x:Key="Secondary">#F5F5F5</Color>
+        <Color x:Key="Tertiary">#201F1F</Color>
+    </ContentPage.Resources>
+    <Grid>
+        <Image Source="main_background.jpg" Aspect="AspectFill" Opacity="0.5"/>
+        <Image Source="jupiter.png" Aspect="AspectFill" HeightRequest="300" WidthRequest="300" VerticalOptions="End" Margin="0,0,0,-150"/>
+        <ScrollView AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+                    AbsoluteLayout.LayoutFlags="All">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="5*"/>
+                    <RowDefinition Height="4*"/>
+                </Grid.RowDefinitions>
+                
+                <!--TOP TITLE-->
+                <Label TextColor="{StaticResource Primary}" Text="AstroTip" FontSize="40"
+               HorizontalTextAlignment="Center" Margin="0, 10" Grid.Row="0" VerticalOptions="Center"/>
+                
+                <!--FORM SECTION-->
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2.5*"/>
+                        <RowDefinition Height="2.5*"/>
+                        <RowDefinition Height="2.5*"/>
+                        <RowDefinition Height="2.5*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="7*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <!--LABELS-->
+                    <Frame BackgroundColor="#00000000" BorderColor="{StaticResource Secondary}" Padding="0" HeightRequest="50"
+                           MaximumWidthRequest="200" Grid.Row="0" Grid.Column="0" Margin="0,0,5,0" 
+                           HorizontalOptions="End" MinimumWidthRequest="100">
+                        <Label Text="Enter Bill:" TextColor="{StaticResource Secondary}" FontSize="13"
+                               HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold"/>
+                    </Frame>
+                    <Frame BackgroundColor="#00000000" BorderColor="{StaticResource Secondary}" Padding="0" HeightRequest="50"
+                           MaximumWidthRequest="200" Grid.Row="1" Grid.Column="0" Margin="0,0,5,0"
+                           HorizontalOptions="End" MinimumWidthRequest="100">
+                        <Label Text="Choose Tip:" TextColor="{StaticResource Secondary}" FontSize="13"
+                               HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold"/>
+                    </Frame>
+                    <Frame BackgroundColor="#00000000" BorderColor="{StaticResource Secondary}" Padding="0" HeightRequest="50"
+                           MaximumWidthRequest="200" Grid.Row="2" Grid.Column="0" Margin="0,0,5,0"
+                           HorizontalOptions="End" MinimumWidthRequest="100">
+                        <Label x:Name="lblCustomTip" Text="Customize Tip:" TextColor="{StaticResource Secondary}" FontSize="13"
+                               HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold"/>
+                    </Frame>
+                    <Frame BackgroundColor="#00000000" BorderColor="{StaticResource Secondary}" Padding="0" HeightRequest="50"
+                           MaximumWidthRequest="200" Grid.Row="3" Grid.Column="0" Margin="0,0,5,0"
+                           HorizontalOptions="End" MinimumWidthRequest="100">
+                        <Label Text="Split Bill:" TextColor="{StaticResource Secondary}" FontSize="13"
+                               HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold"/>
+                    </Frame>
+                    
+                    
+                    
+                    
+                    <!--INPUTS-->
+                    <Entry x:Name="BillEntry" Text="1000" Grid.Row="0" Grid.Column="1" VerticalOptions="Center" HorizontalTextAlignment="Center"
+                           MaximumWidthRequest="500" HorizontalOptions="Fill" Keyboard="Numeric" Background="{StaticResource Secondary}"
+                           TextColor="{StaticResource Tertiary}" FontSize="25" Margin="5,0" TextChanged="BillEntry_TextChanged"/>
+                    <FlexLayout Direction="Row" Grid.Column="1" Grid.Row="1" HorizontalOptions="Center" Wrap="Wrap" VerticalOptions="Center">
+                        <Button Text="10%" HeightRequest="60" WidthRequest="60" Margin="5,0" BorderWidth="1"
+                                BackgroundColor="{StaticResource Tertiary}" TextColor="{StaticResource Primary}"
+                                BorderColor="{StaticResource Primary}" x:Name="tenPercentBtn" Clicked="tenPercentBtn_Clicked"/>
+                        <Button Text="15%" HeightRequest="60" WidthRequest="60" Margin="5,0" BorderWidth="1"
+                                BackgroundColor="{StaticResource Tertiary}" TextColor="{StaticResource Primary}"
+                                BorderColor="{StaticResource Primary}" x:Name="fifteenPercentBtn" Clicked="fifteenPercentBtn_Clicked"/>
+                        <Button Text="20%" HeightRequest="60" WidthRequest="60" Margin="5,0" BorderWidth="1"
+                                BackgroundColor="{StaticResource Tertiary}" TextColor="{StaticResource Primary}"
+                                BorderColor="{StaticResource Primary}" x:Name="twentyPercentBtn" Clicked="twentyPercentBtn_Clicked"/>
+                    </FlexLayout>
+                    <VerticalStackLayout Grid.Row="2" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Fill" MaximumWidthRequest="500"
+                                         x:Name="sliderContainer">
+                        <Image x:Name="Astronaut" Source="astronaut.png" HeightRequest="18" HorizontalOptions="Start" RotationX="20" TranslationX="0"/>
+                        <Slider Grid.Row="2" Grid.Column="1" HorizontalOptions="Fill" MinimumTrackColor="{StaticResource Primary}"
+                                MaximumTrackColor="{StaticResource Secondary}" Minimum="0" Maximum="50" x:Name="tipSlider"
+                                ValueChanged="tipSlider_ValueChanged"/>
+                    </VerticalStackLayout>
+                    <HorizontalStackLayout Grid.Column="1" Grid.Row="3" HorizontalOptions="Center">
+                        <Button Text="-" HeightRequest="60" WidthRequest="60" Margin="0,0" BorderWidth="1" FontSize="40"
+                                BackgroundColor="{StaticResource Primary}" TextColor="{StaticResource Tertiary}"
+                                BorderColor="{StaticResource Primary}" CornerRadius="0"
+                                x:Name="decrementBtn" Clicked="decrementBtn_Clicked"/>
+                        <Entry Grid.Row="0" Grid.Column="1" VerticalOptions="Center" HorizontalTextAlignment="Center"
+                               MaximumWidthRequest="500" HorizontalOptions="Fill" Background="{StaticResource Secondary}"
+                               HeightRequest="60" WidthRequest="80" TextColor="{StaticResource Tertiary}" FontSize="40" FontAttributes="Bold"
+                               IsReadOnly="True" x:Name="splitEntry"/>
+                        <Button Text="+" HeightRequest="60" WidthRequest="60" Margin="0,0" BorderWidth="1" FontSize="40"
+                                BackgroundColor="{StaticResource Primary}" TextColor="{StaticResource Tertiary}"
+                                BorderColor="{StaticResource Primary}" CornerRadius="0"
+                                x:Name="incrementBtn" Clicked="incrementBtn_Clicked"/>
+                    </HorizontalStackLayout>
+                    
+                </Grid>
+                <Frame Grid.Row="2" BackgroundColor="#80000000" BorderColor="{StaticResource Primary}"
+                       Margin="5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="4.5*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="4.5*"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <Label Text="TotaL Person" FontSize="20" Grid.ColumnSpan="3" HorizontalOptions="Center"/>
+
+                        <Label x:Name="IndividualAmount" Text="1000.00" Grid.Column="0" VerticalOptions="Center" FontSize="30" HorizontalOptions="End" HorizontalTextAlignment="End"/>
+
+                        <VerticalStackLayout Grid.Column="2" VerticalOptions="Center" HorizontalOptions="Start">
+                            <Label Text="Total Bill to Pay:" FontAttributes="Bold"/>
+                            <Label x:Name="TotalAmount" Text="1000.00"/>
+                            <Label Text="Tip Amount:" FontAttributes="Bold"/>
+                            <Label x:Name="TipAmount" Text="0"/>
+                        </VerticalStackLayout>
+                    </Grid>
+                    
+                </Frame>
+            </Grid>
+        </ScrollView>
+    </Grid>
+</ContentPage>
