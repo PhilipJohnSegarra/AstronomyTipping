@@ -33,10 +33,11 @@
                 <!--FORM SECTION-->
                 <Grid Grid.Row="1">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="2.5*"/>
-                        <RowDefinition Height="2.5*"/>
-                        <RowDefinition Height="2.5*"/>
-                        <RowDefinition Height="2.5*"/>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="3*"/>
@@ -64,6 +65,12 @@
                     </Frame>
                     <Frame BackgroundColor="#00000000" BorderColor="{StaticResource Secondary}" Padding="0" HeightRequest="50"
                            MaximumWidthRequest="200" Grid.Row="3" Grid.Column="0" Margin="0,0,5,0"
+                           HorizontalOptions="End" MinimumWidthRequest="100">   
+                        <Label Text="Enter Tip (%):" TextColor="{StaticResource Secondary}" FontSize="13"
+                               HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold"/>
+                    </Frame>
+                    <Frame BackgroundColor="#00000000" BorderColor="{StaticResource Secondary}" Padding="0" HeightRequest="50"
+                           MaximumWidthRequest="200" Grid.Row="4" Grid.Column="0" Margin="0,0,5,0"
                            HorizontalOptions="End" MinimumWidthRequest="100">
                         <Label Text="Split Bill:" TextColor="{StaticResource Secondary}" FontSize="13"
                                HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold"/>
@@ -94,16 +101,21 @@
                                 MaximumTrackColor="{StaticResource Secondary}" Minimum="0" Maximum="50" x:Name="tipSlider"
                                 ValueChanged="tipSlider_ValueChanged"/>
                     </VerticalStackLayout>
-                    <HorizontalStackLayout Grid.Column="1" Grid.Row="3" HorizontalOptions="Center">
-                        <Button Text="-" HeightRequest="60" WidthRequest="60" Margin="0,0" BorderWidth="1" FontSize="40"
+                    <Frame  Grid.Row="3" Grid.Column="1" BorderColor="{StaticResource Primary}" Padding="0" MaximumHeightRequest="50" Margin="5, 0">
+                        <Entry x:Name="TipEntry" Text="0" TextColor="{StaticResource Primary}" VerticalOptions="Center" HorizontalTextAlignment="Center"
+                               MaximumWidthRequest="500" HorizontalOptions="Fill" Keyboard="Numeric" Background="Transparent"
+                               FontSize="25" Margin="0" Completed="TipEntry_Completed" />
+                    </Frame>
+                    <HorizontalStackLayout Grid.Column="1" Grid.Row="4" HorizontalOptions="Center">
+                        <Button Text="-" HeightRequest="60" WidthRequest="80" Margin="0,0" BorderWidth="1" FontSize="40"
                                 BackgroundColor="{StaticResource Primary}" TextColor="{StaticResource Tertiary}"
                                 BorderColor="{StaticResource Primary}" CornerRadius="0"
                                 x:Name="decrementBtn" Clicked="decrementBtn_Clicked"/>
                         <Entry Grid.Row="0" Grid.Column="1" VerticalOptions="Center" HorizontalTextAlignment="Center"
                                MaximumWidthRequest="500" HorizontalOptions="Fill" Background="{StaticResource Secondary}"
                                HeightRequest="60" WidthRequest="80" TextColor="{StaticResource Tertiary}" FontSize="40" FontAttributes="Bold"
-                               IsReadOnly="True" x:Name="splitEntry"/>
-                        <Button Text="+" HeightRequest="60" WidthRequest="60" Margin="0,0" BorderWidth="1" FontSize="40"
+                               Keyboard="Numeric" x:Name="splitEntry" Text="1" Completed="splitEntry_Completed"/>
+                        <Button Text="+" HeightRequest="60" WidthRequest="80" Margin="0,0" BorderWidth="1" FontSize="40"
                                 BackgroundColor="{StaticResource Primary}" TextColor="{StaticResource Tertiary}"
                                 BorderColor="{StaticResource Primary}" CornerRadius="0"
                                 x:Name="incrementBtn" Clicked="incrementBtn_Clicked"/>
@@ -124,9 +136,9 @@
                         <Label x:Name="IndividualAmount" Text="1000.00" Grid.Column="0" VerticalOptions="Center" FontSize="30" HorizontalOptions="End" HorizontalTextAlignment="End"/>
 
                         <VerticalStackLayout Grid.Column="2" VerticalOptions="Center" HorizontalOptions="Start">
-                            <Label Text="Total Bill to Pay:" FontAttributes="Bold"/>
+                            <Label Text="Subtotal:" FontAttributes="Bold"/>
                             <Label x:Name="TotalAmount" Text="1000.00"/>
-                            <Label Text="Tip Amount:" FontAttributes="Bold"/>
+                            <Label Text="Tip Per Person:" FontAttributes="Bold"/>
                             <Label x:Name="TipAmount" Text="0"/>
                         </VerticalStackLayout>
                     </Grid>

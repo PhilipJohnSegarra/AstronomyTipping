@@ -1,4 +1,5 @@
-﻿using Microsoft.Maui.Controls;
+﻿using Android.Widget;
+using Microsoft.Maui.Controls;
 using System.Globalization;
 namespace AstronomyTipping
 {
@@ -8,6 +9,8 @@ namespace AstronomyTipping
         double Bill, TipPercentage;
         Receipt rcp;
         CultureInfo CultureInfo;
+
+        Color primary, secondary;
         public MainPage()
         {
             InitializeComponent();
@@ -17,6 +20,9 @@ namespace AstronomyTipping
             Bill = Convert.ToDouble(BillEntry.Text);
             TipPercentage = 0;
             CultureInfo = new CultureInfo("en-PH");
+
+            primary = Color.FromArgb("#EEB685");
+            secondary = Color.FromArgb("#201F1F");
 
             rcp = new Receipt(Bill, TipPercentage, splitBy);
         }
@@ -43,6 +49,19 @@ namespace AstronomyTipping
             UpdateUI();
 
             lblCustomTip.Text = "Customize Tip:\n" + tipSlider.Value.ToString("F2") + "%";
+            TipEntry.Text = tipSlider.Value.ToString("0.00");
+
+            //BTN Corrections
+            if (tipSlider.Value != 10 || tipSlider.Value != 15 || tipSlider.Value != 20)
+            {
+                twentyPercentBtn.BackgroundColor = secondary;
+                tenPercentBtn.BackgroundColor = secondary;
+                fifteenPercentBtn.BackgroundColor = secondary;
+
+                twentyPercentBtn.TextColor = primary;
+                tenPercentBtn.TextColor = primary;
+                fifteenPercentBtn.TextColor = primary;
+            }
         }
 
         private async void decrementBtn_Clicked(object sender, EventArgs e)
@@ -70,9 +89,15 @@ namespace AstronomyTipping
 
             await Sun.TranslateTo(-160, 120, 500);
             await Sun.TranslateTo(0, 0, 0);
-            twentyPercentBtn.BackgroundColor = Color.FromArgb("#201F1F");
-            tenPercentBtn.BackgroundColor = Color.FromArgb("#EEB685");
-            fifteenPercentBtn.BackgroundColor = Color.FromArgb("#201F1F");
+            twentyPercentBtn.BackgroundColor = secondary;
+            tenPercentBtn.BackgroundColor = primary;
+            fifteenPercentBtn.BackgroundColor = secondary;
+
+            twentyPercentBtn.TextColor = primary;
+            tenPercentBtn.TextColor = secondary;
+            fifteenPercentBtn.TextColor = primary;
+
+            TipEntry.Text = tenPercentBtn.Text.Replace("%", "");
         }
 
         private async void fifteenPercentBtn_Clicked(object sender, EventArgs e)
@@ -85,9 +110,15 @@ namespace AstronomyTipping
 
             await Sun.TranslateTo(-80, 120, 500);
             await Sun.TranslateTo(0, 0, 0);
-            twentyPercentBtn.BackgroundColor = Color.FromArgb("#201F1F");
-            tenPercentBtn.BackgroundColor = Color.FromArgb("#201F1F");
-            fifteenPercentBtn.BackgroundColor = Color.FromArgb("#EEB685");
+            twentyPercentBtn.BackgroundColor = secondary;
+            tenPercentBtn.BackgroundColor = secondary;
+            fifteenPercentBtn.BackgroundColor = primary;
+
+            twentyPercentBtn.TextColor = primary;
+            tenPercentBtn.TextColor = primary;
+            fifteenPercentBtn.TextColor = secondary;
+
+            TipEntry.Text = fifteenPercentBtn.Text.Replace("%", "");
         }
         private async void twentyPercentBtn_Clicked(object sender, EventArgs e)
         {
@@ -99,9 +130,15 @@ namespace AstronomyTipping
 
             await Sun.TranslateTo(0, 120, 500);
             await Sun.TranslateTo(0, 0, 0);
-            twentyPercentBtn.BackgroundColor = Color.FromArgb("#EEB685");
-            tenPercentBtn.BackgroundColor = Color.FromArgb("#201F1F");
-            fifteenPercentBtn.BackgroundColor = Color.FromArgb("#201F1F");
+            twentyPercentBtn.BackgroundColor = primary;
+            tenPercentBtn.BackgroundColor = secondary;
+            fifteenPercentBtn.BackgroundColor = secondary;
+
+            twentyPercentBtn.TextColor = secondary;
+            tenPercentBtn.TextColor = primary;
+            fifteenPercentBtn.TextColor = primary;
+
+            TipEntry.Text = twentyPercentBtn.Text.Replace("%", "");
         }
 
         private void BillEntry_TextChanged(object sender, TextChangedEventArgs e)
@@ -129,12 +166,56 @@ namespace AstronomyTipping
             await Moon.TranslateTo(0, 0, 0);
         }
 
+        private void TipEntry_Completed(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(TipEntry.Text) || double.Parse(TipEntry.Text) < 0)
+            {
+                TipEntry.Text = "0";
+                return;
+            }
+            if(double.Parse(TipEntry.Text) <= 50)
+            {
+                tipSlider.Value = double.Parse(TipEntry.Text);
+            }
+            rcp.TipPercentage = double.Parse(TipEntry.Text);
+
+            UpdateObject();
+            UpdateUI();
+        }
+
+        private void splitEntry_Completed(object sender, EventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(splitEntry.Text))
+                {
+                    splitEntry.Text = "1";
+                    return;
+                }
+                if (int.Parse(splitEntry.Text) <= 0)
+                {
+                    splitEntry.Text = "1";
+                    return;
+                }
+
+                splitBy = int.Parse(splitEntry.Text);
+                rcp.SplitBy = splitBy;
+                UpdateObject();
+                UpdateUI();
+            }
+            catch
+            {
+                DisplayAlert("Invalid Input", "Entry should contain integers", "Ok");
+            }
+            
+        }
+
         private void UpdateUI()
         {
             
             IndividualAmount.Text = string.Format(CultureInfo, "₱{0:F2}", rcp.AmountPerPerson);
             TotalAmount.Text = string.Format(CultureInfo, "₱{0:F2}", rcp.Bill);
-            TipAmount.Text = string.Format(CultureInfo, "₱{0:F2}", rcp.TipAmount);
+            TipAmount.Text = string.Format(CultureInfo, "₱{0:F2}", rcp.TipAmount/splitBy);
         }
         private void UpdateObject()
         {
