@@ -49,7 +49,7 @@ namespace AstronomyTipping
             UpdateUI();
 
             lblCustomTip.Text = "Customize Tip:\n" + tipSlider.Value.ToString("F2") + "%";
-            TipEntry.Text = tipSlider.Value.ToString("0.00");
+            TipEntry.Text = rcp.TipAmount.ToString("0.00");
 
             //BTN Corrections
             if (tipSlider.Value != 10 || tipSlider.Value != 15 || tipSlider.Value != 20)
@@ -72,7 +72,7 @@ namespace AstronomyTipping
                 splitEntry.Text = splitBy.ToString();
             }
             rcp.SplitBy = splitBy;
-            UpdateObject();
+            rcp.AmountPerPersonCalcu(rcp.Bill, rcp.SplitBy);
             UpdateUI();
 
             await Moon.TranslateTo(130, 300, 500);
@@ -97,7 +97,8 @@ namespace AstronomyTipping
             tenPercentBtn.TextColor = secondary;
             fifteenPercentBtn.TextColor = primary;
 
-            TipEntry.Text = tenPercentBtn.Text.Replace("%", "");
+            TipEntry.Text = rcp.TipAmount.ToString("0.00");
+            tipSlider.IsEnabled = true;
         }
 
         private async void fifteenPercentBtn_Clicked(object sender, EventArgs e)
@@ -118,7 +119,8 @@ namespace AstronomyTipping
             tenPercentBtn.TextColor = primary;
             fifteenPercentBtn.TextColor = secondary;
 
-            TipEntry.Text = fifteenPercentBtn.Text.Replace("%", "");
+            TipEntry.Text = rcp.TipAmount.ToString("0.00");
+            tipSlider.IsEnabled = true;
         }
         private async void twentyPercentBtn_Clicked(object sender, EventArgs e)
         {
@@ -138,7 +140,8 @@ namespace AstronomyTipping
             tenPercentBtn.TextColor = primary;
             fifteenPercentBtn.TextColor = primary;
 
-            TipEntry.Text = twentyPercentBtn.Text.Replace("%", "");
+            TipEntry.Text = rcp.TipAmount.ToString("0.00");
+            tipSlider.IsEnabled = true;
         }
 
         private void BillEntry_TextChanged(object sender, TextChangedEventArgs e)
@@ -152,6 +155,8 @@ namespace AstronomyTipping
             rcp.Bill = Bill;
             UpdateObject();
             UpdateUI();
+            TipEntry.Text = rcp.TipAmount.ToString("0.00");
+            tipSlider.IsEnabled = true;
         }
 
         private async void incrementBtn_Clicked(object sender, EventArgs e)
@@ -159,7 +164,7 @@ namespace AstronomyTipping
             splitBy++;
             splitEntry.Text = splitBy.ToString();
             rcp.SplitBy = splitBy;
-            UpdateObject();
+            rcp.AmountPerPersonCalcu(rcp.Bill, rcp.SplitBy);
             UpdateUI();
 
             await Moon.TranslateTo(270, 300, 500);
@@ -168,19 +173,28 @@ namespace AstronomyTipping
 
         private void TipEntry_Completed(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(TipEntry.Text) || double.Parse(TipEntry.Text) < 0)
+            if (string.IsNullOrEmpty(TipEntry.Text) || double.Parse(TipEntry.Text) <= 0)
             {
                 TipEntry.Text = "0";
+                tipSlider.IsEnabled = true;
                 return;
             }
-            if(double.Parse(TipEntry.Text) <= 50)
-            {
-                tipSlider.Value = double.Parse(TipEntry.Text);
-            }
-            rcp.TipPercentage = double.Parse(TipEntry.Text);
+
+            tipSlider.IsEnabled = false;
+
+            twentyPercentBtn.BackgroundColor = secondary;
+            tenPercentBtn.BackgroundColor = secondary;
+            fifteenPercentBtn.BackgroundColor = secondary;
+
+            twentyPercentBtn.TextColor = primary;
+            tenPercentBtn.TextColor = primary;
+            fifteenPercentBtn.TextColor = primary;
 
             UpdateObject();
+            rcp.TipAmount = double.Parse(TipEntry.Text);
             UpdateUI();
+
+            
         }
 
         private void splitEntry_Completed(object sender, EventArgs e)
@@ -214,7 +228,7 @@ namespace AstronomyTipping
         {
             
             IndividualAmount.Text = string.Format(CultureInfo, "₱{0:F2}", rcp.AmountPerPerson);
-            TotalAmount.Text = string.Format(CultureInfo, "₱{0:F2}", rcp.Bill);
+            TotalAmount.Text = string.Format(CultureInfo, "₱{0:F2}", rcp.Bill/splitBy);
             TipAmount.Text = string.Format(CultureInfo, "₱{0:F2}", rcp.TipAmount/splitBy);
         }
         private void UpdateObject()

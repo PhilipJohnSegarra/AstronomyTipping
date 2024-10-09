@@ -65,8 +65,8 @@
                     </Frame>
                     <Frame BackgroundColor="#00000000" BorderColor="{StaticResource Secondary}" Padding="0" HeightRequest="50"
                            MaximumWidthRequest="200" Grid.Row="3" Grid.Column="0" Margin="0,0,5,0"
-                           HorizontalOptions="End" MinimumWidthRequest="100">   
-                        <Label Text="Enter Tip (%):" TextColor="{StaticResource Secondary}" FontSize="13"
+                           HorizontalOptions="End" MinimumWidthRequest="100">
+                        <Label Text="Enter Tip (₱):" TextColor="{StaticResource Secondary}" FontSize="13"
                                HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold"/>
                     </Frame>
                     <Frame BackgroundColor="#00000000" BorderColor="{StaticResource Secondary}" Padding="0" HeightRequest="50"
@@ -131,12 +131,12 @@
                             <ColumnDefinition Width="4.5*"/>
                         </Grid.ColumnDefinitions>
                         
-                        <Label Text="TotaL Person" FontSize="20" Grid.ColumnSpan="3" HorizontalOptions="Center"/>
+                        <Label Text="Total Per Person" FontSize="20" Grid.ColumnSpan="3" HorizontalOptions="Center"/>
 
                         <Label x:Name="IndividualAmount" Text="1000.00" Grid.Column="0" VerticalOptions="Center" FontSize="30" HorizontalOptions="End" HorizontalTextAlignment="End"/>
 
                         <VerticalStackLayout Grid.Column="2" VerticalOptions="Center" HorizontalOptions="Start">
-                            <Label Text="Subtotal:" FontAttributes="Bold"/>
+                            <Label Text="Subtotal Per Person:" FontAttributes="Bold"/>
                             <Label x:Name="TotalAmount" Text="1000.00"/>
                             <Label Text="Tip Per Person:" FontAttributes="Bold"/>
                             <Label x:Name="TipAmount" Text="0"/>
